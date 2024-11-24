@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        /* General Reset */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .signup-container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-header h2 {
+            margin: 0;
+            color: #333;
+        }
+
+        .form-header p {
+            margin: 0.5rem 0 0;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 0.5rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .signup-btn {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 0.8rem;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .signup-btn:hover {
+            background: #0056b3;
+        }
+
+        .login-text {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .login-text a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-text a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: -1rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+    <script>
+        function validateForm(event) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            const error = document.getElementById('error-message');
+
+            if (password !== confirmPassword) {
+                error.textContent = "Passwords do not match!";
+                event.preventDefault();
+            } else {
+                error.textContent = "";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="form-header">
+            <h2>Sign Up</h2>
+            <p>Create a new account</p>
+        </div>
+        <form method="POST" onsubmit="validateForm(event)">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <p id="error-message" class="error"></p>
+            <button type="submit" class="signup-btn">Sign Up</button>
+            <p class="login-text">Already have an account? <a href="/login">Log in</a></p>
+        </form>
+    </div>
+</body>
+</html>

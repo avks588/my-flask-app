@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Screener</title>
+    <style>
+        /* General Reset */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 1rem;
+            min-height: 100vh;
+        }
+
+        .screener-container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-header h2 {
+            margin: 0;
+            color: #333;
+        }
+
+        .form-header p {
+            margin: 0.5rem 0 0;
+            color: #666;
+        }
+
+        form {
+            margin-top: 1.5rem;
+        }
+
+        input[type="file"] {
+            display: block;
+            margin: 0 auto 1rem;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="file"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .submit-btn {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 0.8rem;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #0056b3;
+        }
+
+        .logout-link {
+            margin-top: 1rem;
+            display: block;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .logout-link:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+    </style>
+    <script>
+        function validateFile(event) {
+            const fileInput = document.querySelector('input[type="file"]');
+            const errorMessage = document.querySelector('.error-message');
+            
+            if (!fileInput.files[0]) {
+                errorMessage.textContent = "Please select a file to upload.";
+                event.preventDefault();
+            } else if (!fileInput.files[0].name.endsWith('.csv')) {
+                errorMessage.textContent = "Only CSV files are allowed.";
+                event.preventDefault();
+            } else {
+                errorMessage.textContent = "";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="screener-container">
+        <div class="form-header">
+            <h2>Stock Screener</h2>
+            <p>Upload a CSV file to screen stocks or investigate them</p>
+        </div>
+
+        <!-- Stock Screener Form -->
+        <form method="POST" enctype="multipart/form-data" onsubmit="validateFile(event)">
+            <input type="file" name="file" accept=".csv" required>
+            <input type="hidden" name="action" value="screener">
+            <button type="submit" class="submit-btn">Run Stock Screener</button>
+        </form>
+
+        <!-- Stock Investigator Form 
+        <form method="POST" enctype="multipart/form-data" onsubmit="validateFile(event)">
+            <input type="file" name="file" accept=".csv" required>
+            <input type="hidden" name="action" value="investigator">
+            <button type="submit" class="submit-btn">Run Stock Investigator</button>
+        </form>
+
+        <a href="/logout" class="logout-link">Logout</a>
+        <p class="error-message"></p>
+    </div> -->
+
+    <!-- Display Results for Stock Screener -->
+    {% if action == 'screener' %}
+        <div class="table-container">
+            <h2>Stock Screening Results</h2>
+            {{ ranked_data|safe }}
+        </div>
+    {% elif action == 'investigator' %}
+        <div class="table-container">
+            <h2>Stock Investigation Results</h2>
+            {{ investigator_data|safe }}
+        </div>
+    {% endif %}
+</body>
+</html>
